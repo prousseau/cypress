@@ -1,4 +1,4 @@
-import { InscriptionComponent } from './inscription.component';
+import { InfolettreComponent } from './infolettre.component';
 import {
   BrowserAnimationsModule,
 } from '@angular/platform-browser/animations';
@@ -13,7 +13,7 @@ class WrapperComponent {}
 it(`doit tester le composant d'inscription`, () => {
   cy.mount(WrapperComponent, {
     declarations: [WrapperComponent],
-    imports: [InscriptionComponent, HttpClientModule, BrowserAnimationsModule],
+    imports: [InfolettreComponent, HttpClientModule, BrowserAnimationsModule],
   });
 
   cy.intercept(/nominatim/, { body: [] });
