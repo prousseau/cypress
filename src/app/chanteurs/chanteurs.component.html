@@ -1,0 +1,9 @@
+
+<h1>
+  Les Chanteurs
+</h1>
+
+<div class="container">
+  <app-chanteur-card *ngFor="let chanteur of chanteurs$ | async" [chanteur]="chanteur">
+  </app-chanteur-card>
+</div>

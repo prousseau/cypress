@@ -1,0 +1,22 @@
+<mat-card
+  *ngIf="chanteur"
+  data-testid="carte-chanteur"
+>
+  <mat-card-header [attr.data-testid]="'carte-' + chanteur.id">
+    <mat-card-title>{{ chanteur.nom }}</mat-card-title>
+    <mat-card-subtitle><cite>&ldquo;{{ chanteur.citation }}&rdquo;</cite></mat-card-subtitle>
+  </mat-card-header>
+
+  <img mat-card-image [alt]="chanteur.nom" [src]="chanteur.imageUrl"/>
+
+  <mat-card-content>
+    {{ chanteur.biographie }}
+  </mat-card-content>
+
+  <mat-card-actions class="justify-evenly">
+    <a mat-raised-button>
+      Suivre
+    </a>
+  </mat-card-actions>
+
+</mat-card>
