@@ -7,6 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:component": "cypress run --component",
     "testbed": "ng test --test-path-pattern=testbed.spec",
     "spectator": "ng test --test-path-pattern=spectator.spec",
     "testlib": "ng test --test-path-pattern=tl.spec",

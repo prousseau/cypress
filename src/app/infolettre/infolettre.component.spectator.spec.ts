@@ -5,7 +5,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
+import { byLabel, byRole, byTestId, createComponentFactory } from '@ngneat/spectator/jest';
 
 describe('Component Infolettre via Spectator', () => {
   const createComponent = createComponentFactory({
@@ -21,6 +21,8 @@ describe('Component Infolettre via Spectator', () => {
   it('Doit inscrire un courriel', fakeAsync(() => {
     const spectator = createComponent();
     spectator.typeInElement('test@test.com', byTestId('input-courriel'));
+    // spectator.click(byLabel(`J'autorise`));
+    spectator.click(byRole(`checkbox`));
     spectator.click(byTestId('btn-soumettre'));
 
     TestBed.inject(HttpTestingController)

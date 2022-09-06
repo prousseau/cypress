@@ -7,6 +7,7 @@ it(`doit tester le composant d'inscription à l'infolettre`, () => {
     imports: [InfolettreComponent, HttpClientModule, BrowserAnimationsModule],
   });
   cy.getByTestId('input-courriel').type('test@test.com');
+  cy.getByTestId('input-optin').find('label').click({force:true});
   cy.getByTestId('btn-soumettre').click();
-  cy.getByTestId('message').should('have.text', 'Merci!');
+  cy.getByTestId('message').should('include.text', 'Merci!');
 });

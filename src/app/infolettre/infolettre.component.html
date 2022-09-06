@@ -3,13 +3,28 @@
 <p>Fadeli deli de Toui deli delo Fadada lidou Toudou oui ou</p>
 <hr>
 <form (ngSubmit)="inscrire()" [formGroup]="formGroup">
+
   <p>
     <mat-form-field>
       <mat-label>Votre courriel</mat-label>
-      <input data-testid="input-courriel" formControlName="courriel" matInput />
+      <input type="email" data-testid="input-courriel" formControlName="courriel" matInput />
     </mat-form-field>
   </p>
-  <button type="submit" color="primary" data-testid="btn-soumettre" mat-raised-button>Soumettre</button>
+
+  <p>
+    <mat-checkbox data-testid="input-optin" formControlName="optin">
+      J'autorise
+    </mat-checkbox>
+  </p>
+
+  <button type="submit" color="primary" data-testid="btn-soumettre" mat-raised-button [disabled]="!formGroup.valid">
+    Soumettre
+  </button>
 </form>
 
-<p *ngIf="message" data-testid="message">{{ message }}</p>
+<div class="message success-message" *ngIf="message" data-testid="message">
+  <h3>{{ message }}</h3>
+  <a class="close">&times;</a>
+</div>
+
+

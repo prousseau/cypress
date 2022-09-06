@@ -7,7 +7,6 @@
       "id": 1,
       "nom": "Paul Piché",
       "citation": "Avrahi dadi Vradi de dlom  Optedla delom Ari te dladi",
-      "biographie": "",
       "imageUrl": "/assets/chanteurs/paul-piche.jpg",
       "aime": true
     },
@@ -15,7 +14,6 @@
       "id": 2,
       "nom": "Pierre Flynn",
       "citation": "Rouler dans la nuit nicotine, pas besoin de grand chose, Sandwiches et gazoline",
-      "biographie": "",
       "imageUrl": "/assets/chanteurs/pierre-flynn.jpg",
       "aime": false
     },
@@ -23,7 +21,6 @@
       "id": 3,
       "nom": "Claude Dubois",
       "citation": "Fadeli deli de Toui deli delo Fadada lidou Toudou oui ou",
-      "biographie": "",
       "imageUrl": "/assets/chanteurs/claude-dubois.jpg",
       "aime": false
     },
@@ -31,7 +28,6 @@
       "id": 4,
       "nom": "Roch Voisine",
       "citation": "Pourquoi tu pars, reste ici, j'ai tant besoin d'une amie",
-      "biographie": "",
       "imageUrl": "/assets/chanteurs/roch-voisine.png",
       "aime": false
     },
@@ -39,7 +35,6 @@
       "id": 5,
       "nom": "Dan Bigras",
       "citation": "Le Dodge Ram: le courage, la légende…",
-      "biographie": "",
       "imageUrl": "/assets/chanteurs/dan-bigras.jpg",
       "aime": false
     },

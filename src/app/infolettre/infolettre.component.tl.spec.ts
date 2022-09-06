@@ -21,6 +21,9 @@ describe(`InfolettreComponent via la "Testing Library"`, () => {
     const user = userEvent.setup();
 
     await user.type(screen.getByTestId('input-courriel'), 'test@test.com');
+    // await user.click(screen.getByLabelText(`J'autorise`));
+    await user.click(screen.getByRole(`checkbox`));
+
     await user.click(screen.getByTestId('btn-soumettre'));
 
     TestBed.inject(HttpTestingController)

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Chanteur } from './chanteur.model';
 
@@ -14,31 +14,21 @@ export class ChanteurService {
     );
   };
 
-  addFavourite(id: number): Observable<ArrayBuffer> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    console.log(id);
-    return this.httpClient.patch<ArrayBuffer>(
-      `http://localhost:3000/chanteurs/${id}`,
-      { id, aime: true },
-      httpOptions
+  addFavourite(id: number): Observable<Chanteur> {
+    return this.httpClient.patch<any>(
+      `http://localhost:3000/chanteurs/${+id}`,
+      { aime: true }
+    ).pipe(
+        map((res: any) => res.body)
     );
   }
 
-  removeFavourite(id: number): Observable<ArrayBuffer> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    return this.httpClient.patch<ArrayBuffer>(
-      `http://localhost:3000/chanteurs/${id}`,
-      { id, aime: false},
-      httpOptions
+  removeFavourite(id: number): Observable<Chanteur> {
+    return this.httpClient.patch<any>(
+      `http://localhost:3000/chanteurs/${+id}`,
+      { aime: false }
+    ).pipe(
+      map((res: any) => res.body)
     );
   }
 }

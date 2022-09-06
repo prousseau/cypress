@@ -9,10 +9,6 @@
 
   <img mat-card-image [alt]="chanteur.nom" [src]="chanteur.imageUrl"/>
 
-  <mat-card-content>
-    {{ chanteur.biographie }}
-  </mat-card-content>
-
   <mat-card-actions class="flex justify-around items-center">
     <mat-icon
       *ngIf="chanteur.aime"

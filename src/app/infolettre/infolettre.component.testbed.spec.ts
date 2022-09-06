@@ -52,9 +52,16 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
     input.value = 'test@test.com';
     input.dispatchEvent(new Event('input'));
 
-    fixture.debugElement
+    const optinLabel = fixture.debugElement
+      .query(By.css('[data-testid=input-optin] input[type="checkbox"]'))
+      .nativeElement as HTMLElement;
+    optinLabel.click();
+    fixture.detectChanges();
+
+    const btnSoumettre = fixture.debugElement
       .query(By.css('[data-testid=btn-soumettre]'))
-      .nativeElement.click();
+      .nativeElement as HTMLButtonElement;
+    btnSoumettre.click();
 
     TestBed.inject(HttpTestingController)
       .expectOne((req) => !!req.url.match(/inscription/))
@@ -66,6 +73,6 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
       By.css('[data-testid=message]')
     ).nativeElement as HTMLParagraphElement;
 
-    expect(message.textContent).toBe('Merci!');
+    expect(message.textContent).toContain('Merci!');
   }));
 });

@@ -21,6 +21,16 @@ declare namespace Cypress {
      * @desc Sélectionne la première carte de la liste
      */
     premiereCarte(): Chainable<JQuery<HTMLElement>>;
+
+    /**
+     * @type Commande Cypress de type Child non-Chainable
+     * @desc Fait une assertion pour valider si le chanteur à la mention "aime"
+     *
+     * doit avoir un parent ` Carte Chanteur `
+     * @example
+     *    cy.premiereCarte().shoulBeFavourite()
+     */
+    shoulBeFavourite(): void;
   }
 };
 
@@ -31,12 +41,14 @@ Cypress.Commands.add('getByTestId', { prevSubject: 'optional' }, (subject, selec
   return cy.get(`[data-testid="${selector}"]`);
 });
 
-
 Cypress.Commands.add('cartes', () => {
   return cy.getByTestId('carte-chanteur');
 });
 
-
 Cypress.Commands.add('premiereCarte', () => {
   return cy.cartes().first();
+});
+
+Cypress.Commands.add('shoulBeFavourite', { prevSubject: 'element' }, (subject) => {
+  cy.wrap(subject).find('mat-icon').should('have.text', 'favorite');
 });

@@ -5,11 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { InfolettreService } from '../shared/infolettre.service';
 
 @Component({
   selector: 'app-infolettre',
   templateUrl: './infolettre.component.html',
+  styleUrls: ['./infolettre.component.scss'],
   standalone: true,
   imports: [
     AsyncPipe,
@@ -20,11 +22,15 @@ import { InfolettreService } from '../shared/infolettre.service';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatCheckboxModule
   ]
 })
 export class InfolettreComponent implements OnInit {
   message: string = '';
-  formGroup: FormGroup = this.fb.group({ courriel: ['', Validators.required] });
+  formGroup: FormGroup = this.fb.group({
+    courriel: [null, Validators.email],
+    optin: [false, Validators.requiredTrue]
+  });
 
   constructor(
     private service: InfolettreService,
