@@ -1,6 +1,10 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { InfolettreComponent } from './infolettre.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { byTestId, createComponentFactory } from '@ngneat/spectator/jest';
 
 describe('Component Infolettre via Spectator', () => {
@@ -9,7 +13,8 @@ describe('Component Infolettre via Spectator', () => {
     declareComponent: false,
     imports: [
       NoopAnimationsModule,
-      InfolettreComponent
+      InfolettreComponent,
+      HttpClientTestingModule,
     ],
   });
 
@@ -18,6 +23,12 @@ describe('Component Infolettre via Spectator', () => {
     spectator.typeInElement('test@test.com', byTestId('input-courriel'));
     spectator.click(byTestId('btn-soumettre'));
 
-    expect(spectator.query(byTestId('resultat'))).toHaveText('Merci!');
+    TestBed.inject(HttpTestingController)
+      .expectOne((req) => !!req.url.match(/inscription/))
+      .flush([true]);
+
+    spectator.tick();
+
+    expect(spectator.query(byTestId('message'))).toHaveText('Merci!');
   }));
 });

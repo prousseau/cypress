@@ -1,13 +1,18 @@
 import { InfolettreComponent } from './infolettre.component';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { InfolettreService } from '../shared/infolettre.service';
 
 describe('Component Infolettre via le Testbed conventionnel', () => {
   let component: InfolettreComponent;
@@ -18,13 +23,17 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
       imports: [
         InfolettreComponent,
         NoopAnimationsModule,
+        HttpClientTestingModule,
         AsyncPipe,
-        NgIf,
+        CommonModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
+      ],
+      providers: [
+        InfolettreService
       ]
     })
     .compileComponents();
@@ -47,11 +56,16 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
       .query(By.css('[data-testid=btn-soumettre]'))
       .nativeElement.click();
 
-    const message = fixture.debugElement
-      .query(By.css('[data-testid=resultat]'))
-      .nativeElement as HTMLParagraphElement;
+    TestBed.inject(HttpTestingController)
+      .expectOne((req) => !!req.url.match(/inscription/))
+      .flush([true]);
+    tick();
+    fixture.detectChanges();
+
+    const message = fixture.debugElement.query(
+      By.css('[data-testid=message]')
+    ).nativeElement as HTMLParagraphElement;
 
     expect(message.textContent).toBe('Merci!');
-
   }));
 });

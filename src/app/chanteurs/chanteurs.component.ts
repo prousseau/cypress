@@ -1,16 +1,44 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import {of} from "rxjs";
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {Observable, map, Subject, switchMap} from "rxjs";
 import { ChanteurCardComponent } from '../chanteur-card/chanteur-card.component';
-import { chanteurs } from '../shared/data';
+import { Chanteur } from '../shared/chanteur.model';
+import { ChanteurService } from '../shared/chanteur.service';
 
 @Component({
   selector: 'app-chanteurs',
   templateUrl: './chanteurs.component.html',
   styleUrls: ['./chanteurs.component.scss'],
   standalone: true,
-  imports: [ CommonModule, ChanteurCardComponent ]
+  imports: [ CommonModule, ChanteurCardComponent ],
+  providers: [ ChanteurService ]
 })
-export class ChanteursComponent  {
-  chanteurs$ = of(chanteurs)
+export class ChanteursComponent implements OnInit, AfterViewInit  {
+  chanteurs$?: Observable<Chanteur[]>;
+  submitter$ = new Subject<void>();
+
+  constructor(private service: ChanteurService) {
+  }
+
+  ngOnInit(): void {
+
+    this.chanteurs$ = this.submitter$.pipe(
+      switchMap(() => this.service.getChanteurs()),
+      map((found) => (found ? found : []))
+    );
+  }
+
+  ngAfterViewInit() {
+    this.submitter$.next();
+  }
+
+  addFavourite(id: number) {
+    this.service.addFavourite(id);
+    this.submitter$.next();
+  }
+
+  removeFavourite(id: number) {
+    this.service.removeFavourite(id);
+    this.submitter$.next();
+  }
 }

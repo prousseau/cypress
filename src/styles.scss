@@ -53,8 +53,6 @@ $candy-app-theme: mat-light-theme(
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-image: url("/assets/large-bg.jpg");
-  background-image: linear-gradient(white, white), url("/assets/large-bg.jpg");
   background-size: cover;
   background-blend-mode: saturation;
 }
@@ -75,7 +73,6 @@ mat-checkbox + mat-checkbox, mat-radio-button + mat-radio-button {
   text-align: center;
 }
 
-
 h2 {
   font-weight: bold;
   font-size: 125%;
@@ -84,4 +81,8 @@ h2 {
 .mat-toolbar.mat-primary {
   background: black;
   color: white;
+}
+
+.mat-form-field-infix {
+  width: 400px !important;
 }

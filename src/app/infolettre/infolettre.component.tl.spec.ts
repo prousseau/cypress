@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { InfolettreComponent } from './infolettre.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
@@ -10,7 +14,8 @@ describe(`InfolettreComponent via la "Testing Library"`, () => {
     await render('<app-infolettre></app-infolettre>', {
       imports: [
         NoopAnimationsModule,
-        InfolettreComponent
+        InfolettreComponent,
+        HttpClientTestingModule,
       ],
     });
     const user = userEvent.setup();
@@ -18,7 +23,10 @@ describe(`InfolettreComponent via la "Testing Library"`, () => {
     await user.type(screen.getByTestId('input-courriel'), 'test@test.com');
     await user.click(screen.getByTestId('btn-soumettre'));
 
-    expect(await screen.findByTestId('resultat')).toHaveTextContent('Merci!');
+    TestBed.inject(HttpTestingController)
+      .expectOne((req) => !!req.url.match(/inscription/))
+      .flush([true]);
 
+    expect(await screen.findByTestId('message')).toHaveTextContent('Merci!');
   });
 });

@@ -22,7 +22,7 @@
       "es2020",
       "dom"
     ],
-    "types": ["cypress", "node"]
+    "types": []
   },
   "exclude": [
     "**/*.spec.ts"

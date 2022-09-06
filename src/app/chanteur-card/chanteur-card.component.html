@@ -13,10 +13,17 @@
     {{ chanteur.biographie }}
   </mat-card-content>
 
-  <mat-card-actions class="justify-evenly">
-    <a mat-raised-button>
-      Suivre
-    </a>
+  <mat-card-actions class="flex justify-around items-center">
+    <mat-icon
+      *ngIf="chanteur.aime"
+      (click)="removeFavourite.emit(chanteur.id)"
+      >favorite</mat-icon
+    >
+    <mat-icon
+      *ngIf="!chanteur.aime"
+      (click)="addFavourite.emit(chanteur.id)"
+      >favorite_outlined</mat-icon
+    >
   </mat-card-actions>
 
 </mat-card>

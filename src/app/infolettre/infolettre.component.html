@@ -1,16 +1,15 @@
 <h2>Infolettre</h2>
 <p>Veuillez vous inscrire, et nous vous enverrons l'infolettre des chanteurs les plus hot du Québec</p>
 <p>Fadeli deli de Toui deli delo Fadada lidou Toudou oui ou</p>
+<hr>
 <form (ngSubmit)="inscrire()" [formGroup]="formGroup">
   <p>
     <mat-form-field>
-      <mat-label>Courriel</mat-label>
+      <mat-label>Votre courriel</mat-label>
       <input data-testid="input-courriel" formControlName="courriel" matInput />
     </mat-form-field>
   </p>
   <button type="submit" color="primary" data-testid="btn-soumettre" mat-raised-button>Soumettre</button>
 </form>
 
-<p data-testid="resultat">Merci!</p>
-
-<!-- <p *ngIf="resultat$ | async as message" data-testid="resultat">{{ message }}</p> -->
+<p *ngIf="message" data-testid="message">{{ message }}</p>

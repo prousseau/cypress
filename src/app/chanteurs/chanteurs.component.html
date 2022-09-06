@@ -4,6 +4,7 @@
 </h1>
 
 <div class="container">
-  <app-chanteur-card *ngFor="let chanteur of chanteurs$ | async" [chanteur]="chanteur">
+  <app-chanteur-card *ngFor="let chanteur of chanteurs$ | async" [chanteur]="chanteur" (addFavourite)="addFavourite($event)"
+  (removeFavourite)="removeFavourite($event)">
   </app-chanteur-card>
 </div>

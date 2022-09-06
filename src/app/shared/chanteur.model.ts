@@ -4,4 +4,5 @@ export interface Chanteur {
   citation: string;
   biographie: string;
   imageUrl: string;
+  aime: boolean;
 }
