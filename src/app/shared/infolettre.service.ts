@@ -7,10 +7,15 @@ export class InfolettreService {
 
   constructor(private httpClient: HttpClient) {}
 
-  inscrire(courriel: string): Observable<boolean> {
-    return this.httpClient.post<boolean>(
+  inscrire(courriel: string): Observable<any> {
+
+    if (courriel === 'paul@piche.com') {
+      return of({ info: 'Vous êtes déjà inscrit!' }).pipe(delay(500));
+    }
+
+    return this.httpClient.post<any>(
       'http://localhost:3000/inscription',
       { courriel }
-    );
+    ).pipe(delay(500));
   }
 }

@@ -10,7 +10,6 @@
     "cypress:run": "cypress run",
     "cypress:component": "cypress run --component",
     "testbed": "ng test --test-path-pattern=testbed.spec",
-    "spectator": "ng test --test-path-pattern=spectator.spec",
     "testlib": "ng test --test-path-pattern=tl.spec",
     "api": "json-server --watch db.json"
   },

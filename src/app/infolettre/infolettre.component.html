@@ -1,30 +1,43 @@
 <h2>Infolettre</h2>
 <p>Veuillez vous inscrire, et nous vous enverrons l'infolettre des chanteurs les plus hot du Québec</p>
 <p>Fadeli deli de Toui deli delo Fadada lidou Toudou oui ou</p>
+
 <hr>
+
 <form (ngSubmit)="inscrire()" [formGroup]="formGroup">
+    <p>
+      <mat-form-field>
+        <mat-label>Votre courriel</mat-label>
+        <input type="email" data-testid="input-courriel" formControlName="courriel" matInput />
+      </mat-form-field>
+    </p>
 
-  <p>
-    <mat-form-field>
-      <mat-label>Votre courriel</mat-label>
-      <input type="email" data-testid="input-courriel" formControlName="courriel" matInput />
-    </mat-form-field>
-  </p>
+    <p>
+      <mat-checkbox data-testid="input-optin" formControlName="optin">
+        J'autorise
+      </mat-checkbox>
+    </p>
 
-  <p>
-    <mat-checkbox data-testid="input-optin" formControlName="optin">
-      J'autorise
-    </mat-checkbox>
-  </p>
-
-  <button type="submit" color="primary" data-testid="btn-soumettre" mat-raised-button [disabled]="!formGroup.valid">
-    Soumettre
-  </button>
+    <button type="submit" color="primary" data-testid="btn-soumettre" mat-raised-button [disabled]="!formGroup.valid">
+      Soumettre
+    </button>
 </form>
 
-<div class="message success-message" *ngIf="message" data-testid="message">
-  <h3>{{ message }}</h3>
-  <a class="close">&times;</a>
-</div>
+<ng-container *ngIf="!processing; then feedback else processer">
+</ng-container>
 
+<ng-template #feedback>
+  <div class="message success-message" *ngIf="message" data-testid="message">
+    <h3>{{ message }}</h3>
+    <a class="close">&times;</a>
+  </div>
 
+  <div class="message warning-message" *ngIf="warning" data-testid="warning">
+    <h3>{{ warning }}</h3>
+    <a class="close">&times;</a>
+  </div>
+</ng-template>
+
+<ng-template #processer>
+  <mat-spinner></mat-spinner>
+</ng-template>

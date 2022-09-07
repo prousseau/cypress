@@ -6,34 +6,23 @@ import {
 } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { InfolettreService } from '../shared/infolettre.service';
 
 describe('Component Infolettre via le Testbed conventionnel', () => {
   let component: InfolettreComponent;
   let fixture: ComponentFixture<InfolettreComponent>;
 
-  beforeEach(async () => {
+  // Ce qui rend les tests compliqués - les pièges
+  // 1- La configuration du TestingModule
+  // 2- Interaction avec le DOM - on doit envoyer un événement pour que ça fonctionne
+  // 3- Asynchronisme
+  // 4- Gérer le change detection
+
+  beforeEach(async () => { // gestion - Testing Module - Pourrait être plus compliqué si pas standalone - pour gérer les dépendances
     await TestBed.configureTestingModule({
       imports: [
         InfolettreComponent,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        AsyncPipe,
-        CommonModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-      ],
-      providers: [
-        InfolettreService
+        HttpClientTestingModule, // truc officiel Angular
+        NoopAnimationsModule,    // car y'a des animations associées à l'utilisation ici de Ng Material - Noop au lieu de BrowserAnimationsModule
       ]
     })
     .compileComponents();
@@ -43,36 +32,38 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
     fixture.detectChanges();
   });
 
-  it('should', fakeAsync(() => {
+  describe(`Usager fourni une adresse valide et soumet le formulaire`, () => {
 
-    const input = fixture.debugElement
-      .query(By.css('[data-testid=input-courriel]'))
-      .nativeElement as HTMLInputElement;
+    it(`Doit afficher un message de confirmation`, fakeAsync(() => { // fakeAsync avec tick pour gérer l'asynchronisme
+      // Fetch les éléments du Dom - data-testid attr pour fin de tests seulement
+      const input = fixture.debugElement.query(By.css('[data-testid=input-courriel]')).nativeElement as HTMLInputElement;
+      const optinCheckBox = fixture.debugElement.query(By.css('[data-testid=input-optin] input[type="checkbox"]')).nativeElement as HTMLElement;
+      const btnSoumettre = fixture.debugElement.query(By.css('[data-testid=btn-soumettre]')).nativeElement as HTMLButtonElement;
+      const message = fixture.debugElement.query(By.css('[data-testid=message]')).nativeElement as HTMLParagraphElement;
 
-    input.value = 'test@test.com';
-    input.dispatchEvent(new Event('input'));
+      input.value = 'test@test.com';
 
-    const optinLabel = fixture.debugElement
-      .query(By.css('[data-testid=input-optin] input[type="checkbox"]'))
-      .nativeElement as HTMLElement;
-    optinLabel.click();
-    fixture.detectChanges();
+      // gestion DOM Event car le Reactive Form - s'attend à un Dom Event pour savoir que la valeur a changée
+      // on doit donc le faire manuellement
+      input.dispatchEvent(new Event('input'));
 
-    const btnSoumettre = fixture.debugElement
-      .query(By.css('[data-testid=btn-soumettre]'))
-      .nativeElement as HTMLButtonElement;
-    btnSoumettre.click();
+      optinCheckBox.click();
+      fixture.detectChanges(); // gestion change detection
 
-    TestBed.inject(HttpTestingController)
-      .expectOne((req) => !!req.url.match(/inscription/))
-      .flush([true]);
-    tick();
-    fixture.detectChanges();
+      btnSoumettre.click();
 
-    const message = fixture.debugElement.query(
-      By.css('[data-testid=message]')
-    ).nativeElement as HTMLParagraphElement;
+      // capter la requête et retourner la réponse attendue
+      // dans le testbed - c'est répondu de façon synchrone - donc mis un delay
+      TestBed.inject(HttpTestingController)
+        .expectOne((req) => !!req.url.match(/inscription/))
+        .flush([true]);
 
-    expect(message.textContent).toContain('Merci!');
-  }));
+      // On doit gérer l'Asynchronisme
+      tick(500); // tick arbitraire de 500 ici - car simulation d'un delai dans le service
+      fixture.detectChanges(); // forcer le rendu du HTML pour voir notre message
+
+      // ASSERT
+      expect(message.textContent).toContain('Merci!');
+    }));
+  });
 });
