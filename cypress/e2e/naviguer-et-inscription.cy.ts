@@ -37,7 +37,7 @@ describe(`Usager se rend à la section infolettre pour s'inscrire`, () => {
   describe(`À l'inscription, l'usager fourni une adresse existante et soumet le formulaire`, () => {
     const courriel = 'paul@piche.com';
 
-    it(`Doit afficher un avis`, () => {
+    it(`Doit afficher un avis - courriel existe déjà dans la base de données`, () => {
       cy.getByTestId('input-courriel').clear().type(courriel);
       cy.getByTestId('btn-soumettre').click();
       cy.getByTestId('message').should('not.exist');

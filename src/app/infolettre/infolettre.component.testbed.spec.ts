@@ -13,16 +13,16 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
 
   // Ce qui rend les tests compliqués - les pièges
   // 1- La configuration du TestingModule
-  // 2- Interaction avec le DOM - on doit envoyer un événement pour que ça fonctionne
+  // 2- Interaction avec le DOM
   // 3- Asynchronisme
   // 4- Gérer le change detection
 
   beforeEach(async () => { // gestion - Testing Module - Pourrait être plus compliqué si pas standalone - pour gérer les dépendances
     await TestBed.configureTestingModule({
       imports: [
-        InfolettreComponent,
+        InfolettreComponent, // standalone component - rend cela plus simple
         HttpClientTestingModule, // truc officiel Angular
-        NoopAnimationsModule,    // car y'a des animations associées à l'utilisation ici de Ng Material - Noop au lieu de BrowserAnimationsModule
+        NoopAnimationsModule,    // car y'a des animations associées à l'utilisation de Ng Material
       ]
     })
     .compileComponents();
@@ -39,7 +39,6 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
       const input = fixture.debugElement.query(By.css('[data-testid=input-courriel]')).nativeElement as HTMLInputElement;
       const optinCheckBox = fixture.debugElement.query(By.css('[data-testid=input-optin] input[type="checkbox"]')).nativeElement as HTMLElement;
       const btnSoumettre = fixture.debugElement.query(By.css('[data-testid=btn-soumettre]')).nativeElement as HTMLButtonElement;
-      const message = fixture.debugElement.query(By.css('[data-testid=message]')).nativeElement as HTMLParagraphElement;
 
       input.value = 'test@test.com';
 
@@ -59,10 +58,11 @@ describe('Component Infolettre via le Testbed conventionnel', () => {
         .flush([true]);
 
       // On doit gérer l'Asynchronisme
-      tick(500); // tick arbitraire de 500 ici - car simulation d'un delai dans le service
+      tick(500); // tick arbitraire de 500 - car simulation d'un delai dans le service
       fixture.detectChanges(); // forcer le rendu du HTML pour voir notre message
 
       // ASSERT
+      const message = fixture.debugElement.query(By.css('[data-testid=message]')).nativeElement as HTMLParagraphElement;
       expect(message.textContent).toContain('Merci!');
     }));
   });
