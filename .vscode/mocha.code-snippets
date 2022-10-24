@@ -1,0 +1,65 @@
+{
+  "describe": {
+		"prefix": "hqdes",
+		"body": [
+			"describe('$1', () => {",
+			"    $0",
+			"});"
+		],
+		"description": "describe"
+	},
+	"context": {
+		"prefix": "hqctx",
+		"body": [
+			"context('$1', () => {",
+			"    $0",
+			"});"
+		],
+		"description": "context"
+	},
+	"it": {
+		"prefix": "it",
+		"body": [
+			"it('$1', () => {",
+			"    $0",
+			"});"
+		],
+		"description": "it"
+	},
+	"before": {
+		"prefix": "hqbf",
+		"body": [
+			"before(() => {",
+			"    $0",
+			"});"
+		],
+		"description": "before"
+	},
+	"beforeEach": {
+		"prefix": "hqbfe",
+		"body": [
+			"beforeEach(() => {",
+			"    $0",
+			"});"
+		],
+		"description": "beforeEach"
+	},
+	"after": {
+		"prefix": "hqaf",
+		"body": [
+			"after(() => {",
+			"    $0",
+			"});"
+		],
+		"description": "after"
+	},
+	"afterEach": {
+		"prefix": "hqafe",
+		"body": [
+			"afterEach(() => {",
+			"    $0",
+			"});"
+		],
+		"description": "afterEach"
+	},
+}
